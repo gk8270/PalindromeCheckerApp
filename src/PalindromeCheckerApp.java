@@ -2,19 +2,21 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String phrase = "A man a plan a canal Panama";
+        String word = "level";
+        PalindromeChecker checker = new PalindromeChecker();
 
-        String normalized = phrase.replaceAll("\\s+", "").toLowerCase();
-
-        if (isPalindrome(normalized)) {
-            System.out.println("\"" + phrase + "\" is a Palindrome");
+        if (checker.checkPalindrome(word)) {
+            System.out.println(word + " is a Palindrome");
         } else {
-            System.out.println("\"" + phrase + "\" is not a Palindrome");
+            System.out.println(word + " is not a Palindrome");
         }
 
     }
+}
 
-    static boolean isPalindrome(String str) {
+class PalindromeChecker {
+
+    public boolean checkPalindrome(String str) {
         int start = 0;
         int end = str.length() - 1;
 
