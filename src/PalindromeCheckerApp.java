@@ -6,66 +6,57 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String word = "radar";
+        String word = "amanaplanacanalpanama";
 
-        // Use Stack-based strategy
-        PalindromeStrategy stackStrategy = new StackStrategy();
-        check(word, stackStrategy);
+        long start, end;
 
-        // Use Deque-based strategy
-        PalindromeStrategy dequeStrategy = new DequeStrategy();
-        check(word, dequeStrategy);
+        start = System.nanoTime();
+        boolean stackResult = stackPalindrome(word);
+        end = System.nanoTime();
+        System.out.println("Stack Approach: " + stackResult + " | Time: " + (end - start) + " ns");
 
+        start = System.nanoTime();
+        boolean dequeResult = dequePalindrome(word);
+        end = System.nanoTime();
+        System.out.println("Deque Approach: " + dequeResult + " | Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        boolean twoPointerResult = twoPointerPalindrome(word);
+        end = System.nanoTime();
+        System.out.println("Two-Pointer Approach: " + twoPointerResult + " | Time: " + (end - start) + " ns");
     }
 
-    static void check(String word, PalindromeStrategy strategy) {
-        if (strategy.isPalindrome(word)) {
-            System.out.println("\"" + word + "\" is a Palindrome using " + strategy.getClass().getSimpleName());
-        } else {
-            System.out.println("\"" + word + "\" is not a Palindrome using " + strategy.getClass().getSimpleName());
-        }
-    }
-}
-
-// Strategy interface
-interface PalindromeStrategy {
-    boolean isPalindrome(String str);
-}
-
-// Stack-based implementation
-class StackStrategy implements PalindromeStrategy {
-
-    @Override
-    public boolean isPalindrome(String str) {
+    static boolean stackPalindrome(String str) {
         Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < str.length(); i++) {
-            stack.push(str.charAt(i));
+        for (char ch : str.toCharArray()) {
+            stack.push(ch);
         }
-
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) != stack.pop()) {
-                return false;
-            }
+        for (char ch : str.toCharArray()) {
+            if (ch != stack.pop()) return false;
         }
         return true;
     }
-}
 
-// Deque-based implementation
-class DequeStrategy implements PalindromeStrategy {
-
-    @Override
-    public boolean isPalindrome(String str) {
+    static boolean dequePalindrome(String str) {
         Deque<Character> deque = new LinkedList<>();
         for (char ch : str.toCharArray()) {
             deque.addLast(ch);
         }
-
         while (deque.size() > 1) {
-            if (!deque.removeFirst().equals(deque.removeLast())) {
-                return false;
-            }
+            if (!deque.removeFirst().equals(deque.removeLast())) return false;
+        }
+        return true;
+    }
+
+    static boolean twoPointerPalindrome(String str) {
+        int start = 0;
+        int end = str.length() - 1;
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) return false;
+            start++;
+            end--;
         }
         return true;
     }
 }
+
