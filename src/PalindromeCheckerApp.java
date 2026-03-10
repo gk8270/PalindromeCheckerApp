@@ -2,14 +2,23 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String word = "racecar";
-        String reverse = "";
+        String word = "level";
+        char[] chars = word.toCharArray();
 
-        for (int i = word.length() - 1; i >= 0; i--) {
-            reverse = reverse + word.charAt(i);
+        boolean isPalindrome = true;
+        int start = 0;
+        int end = chars.length - 1;
+
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
         }
 
-        if (word.equals(reverse)) {
+        if (isPalindrome) {
             System.out.println(word + " is a Palindrome");
         } else {
             System.out.println(word + " is not a Palindrome");
